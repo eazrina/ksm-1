@@ -82,10 +82,14 @@ class TodoController extends Controller
     public function update(Request $request, Todo $todo)
     {
         //dd($request->all(), $todo);
+        $validate = $request->validate([
+            'name' =>'required|string|min:2'
+        ]);
+
         $todo->name = $request->name;
         $todo->save();
 
-        return redirect('/todos')->with('status', ' Todo ' .$request->name. ' Updated');
+        return redirect('/todos')->with('status', ' Todo ' . $validate['name'] . ' Updated');
     }
 
     /**
